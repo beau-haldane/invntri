@@ -45,10 +45,9 @@ until exit == true
     when main_nav[0] # Add item
         inventory << add_item(categories, prompt)
     when main_nav[1] # Edit item
-            edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item\nSearch Item to Edit by Name or SKU"))
+        edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
     when main_nav[2] # Remove item
-        system 'clear'
-        puts "#{main_nav[2]} feature coming soon."
+        remove_item(inventory, prompt, categories, *search_function(inventory, prompt, "Remove Item"))
     when main_nav[3] # Item Search
         search_inventory(*search_function(inventory, prompt, "Search Item by Name or SKU"))
     when main_nav[4] # View Inventory
@@ -60,8 +59,8 @@ until exit == true
     end
     
     # back to main menu?
-    puts ; puts "Back to main menu? [Y|N]"
-    input = gets.strip
-    exit = true if input == 'n'
+    puts
+    input = prompt.yes?("Back to main menu?")
+    exit = true if input == false
 
 end

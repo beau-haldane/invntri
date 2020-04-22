@@ -81,7 +81,7 @@ module Methods
 
         # Display all details of chosen item
         system 'clear'
-        string_in_line("Editing '#{item_to_edit['name'].colorize(:light_green)}'", 162)
+        string_in_line("#{item_to_edit['name'].colorize(:light_green)}", 162)
         item_to_edit.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
         item_to_edit.each { |k, v| print v.to_s + ' '*8 } ; puts
         line(150) ; puts
@@ -113,6 +113,35 @@ module Methods
         
     end
 
+    #                               ! Feature - Remove Item !
+
+    def remove_item(inventory, prompt, categories, search_results, results_printable_array)
+        
+        # Creating hash for tty-prompt to allow users to choose results
+        choose_search_result = Hash[results_printable_array.zip(search_results)]
+
+        # User chooses search result to remove
+        item_to_remove = prompt.select("", choose_search_result)
+
+        # Display all details of chosen item
+        system 'clear'
+        string_in_line("#{item_to_remove['name'].colorize(:light_red)}", 162)
+        item_to_remove.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
+        item_to_remove.each { |k, v| print v.to_s + ' '*8 } ; puts
+        line(150) ; puts
+
+        # Check if user wants to save changes
+        remove = prompt.yes?("Are you sure you want to remove '#{item_to_remove['name'].colorize(:light_red)} from your inventory'?")
+        case remove
+        when true
+            inventory.delete(item_to_remove)
+            puts "You have removed #{item_to_remove['name']}.".colorize(:light_red)
+        when false
+            puts "You have not removed #{item_to_remove['name']}.".colorize(:light_green)
+        end
+
+    end
+
     #                               ! Feature - Search Inventory !
     def search_inventory(search_results, results_printable_array)
         
@@ -127,7 +156,7 @@ module Methods
 
         # Ask user to search a term and return all items with the search term in 'name' or 'SKU'
         puts message ; puts
-        puts "Please enter all or part of the name or SKU of the item you'd like to find:".colorize(:light_green)
+        puts "Search by name or SKU:".colorize(:light_green)
         search = prompt.ask("Search:")
         system 'clear'
         search_results = inventory.select{|item| item['sku'].downcase.include?(search) || item['name'].downcase.include?(search) }
