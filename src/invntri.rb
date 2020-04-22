@@ -45,13 +45,12 @@ until exit == true
     when main_nav[0] # Add item
         inventory << add_item(categories, prompt)
     when main_nav[1] # Edit item
-        system 'clear'
-        puts "#{main_nav[1]} feature coming soon."
+            edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item\nSearch Item to Edit by Name or SKU"))
     when main_nav[2] # Remove item
         system 'clear'
         puts "#{main_nav[2]} feature coming soon."
     when main_nav[3] # Item Search
-        search_inventory(inventory, prompt)
+        search_inventory(*search_function(inventory, prompt, "Search Item by Name or SKU"))
     when main_nav[4] # View Inventory
         system 'clear'
         puts "#{main_nav[4]} feature coming soon."
