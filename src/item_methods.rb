@@ -59,40 +59,30 @@ module ItemMethods
     #                               ! Feature - Edit Iitem !
     def edit_item(prompt, categories, search_results, results_printable_array)
 
-        # Creating hash for tty-prompt to allow users to choose results
-        choose_search_result = Hash[results_printable_array.zip(search_results)]
-
-        # User chooses search result to edit
-        item_to_edit = prompt.select("", choose_search_result)
-        item_to_edit_copy = item_to_edit.dup
-
-        # Display all details of chosen item
-        system 'clear'
-        string_in_line("#{item_to_edit['name'].colorize(:light_green)}", 162)
-        item_to_edit.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
-        item_to_edit.each { |k, v| print v.to_s + ' '*8 } ; puts
-        line(150) ; puts
+        # Asks user to choose which item they'd like to edit
+        chosen_item = choose_item('light_green', prompt, search_results, results_printable_array)
+        chosen_item_copy = chosen_item.dup
         
         # User chooses which attributes they'd like to edit
         item_attr = []
-        item_to_edit.each { |k, v| k == 'cat' || k == 'sub_cat' ? next : item_attr << k }
+        chosen_item.each { |k, v| k == 'cat' || k == 'sub_cat' ? next : item_attr << k }
         item_attr_edit = prompt.multi_select("Which attributes you like to edit? (Arrow down to see all options)", item_attr)
 
         # User gives new values for attributes & values are updated in item hash
-        item_attr_edit.each { |key| item_to_edit_copy[key] = prompt.ask("#{key.capitalize}:") } ; puts
+        item_attr_edit.each { |key| chosen_item_copy[key] = prompt.ask("#{key.capitalize}:") } ; puts
 
         # Present changes to user
         system 'clear'
-        string_in_line("Here are your changes to '#{item_to_edit['name'].colorize(:light_green)}'", 162)
-        item_to_edit_copy.each { |k, v| item_attr_edit.include?(k) ? (print k.upcase.colorize(:light_green) + ' '*((v.to_s.length+8)-k.length)) : (print k.upcase + ' '*((v.to_s.length+8)-k.length)) } ; puts
-        item_to_edit_copy.each { |k, v| item_attr_edit.include?(k) ? (print v.to_s.colorize(:light_green) + ' '*8) : (print v.to_s + ' '*8) } ; puts
+        string_in_line("Here are your changes to '#{chosen_item['name'].colorize(:light_green)}'", 162)
+        chosen_item_copy.each { |k, v| item_attr_edit.include?(k) ? (print k.upcase.colorize(:light_green) + ' '*((v.to_s.length+8)-k.length)) : (print k.upcase + ' '*((v.to_s.length+8)-k.length)) } ; puts
+        chosen_item_copy.each { |k, v| item_attr_edit.include?(k) ? (print v.to_s.colorize(:light_green) + ' '*8) : (print v.to_s + ' '*8) } ; puts
         line(150) ; puts
 
         # Check if user wants to save changes
-        save = prompt.yes?("Save your changes to '#{item_to_edit['name'].colorize(:light_green)}'?")
+        save = prompt.yes?("Save your changes to '#{chosen_item['name'].colorize(:light_green)}'?")
         case save
         when true
-            item_to_edit_copy.each{ |k, v| item_to_edit[k] = v }
+            chosen_item_copy.each{ |k, v| chosen_item[k] = v }
             puts "Your changes have been saved.".colorize(:light_green)
         when false
             puts "Your changes were not saved.".colorize(:light_red)
@@ -104,29 +94,36 @@ module ItemMethods
 
     def remove_item(inventory, prompt, categories, search_results, results_printable_array)
         
-        # Creating hash for tty-prompt to allow users to choose results
-        choose_search_result = Hash[results_printable_array.zip(search_results)]
-
-        # User chooses search result to remove
-        item_to_remove = prompt.select("", choose_search_result)
-
-        # Display all details of chosen item
-        system 'clear'
-        string_in_line("#{item_to_remove['name'].colorize(:light_red)}", 162)
-        item_to_remove.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
-        item_to_remove.each { |k, v| print v.to_s + ' '*8 } ; puts
-        line(150) ; puts
+        # Asks user to choose which item they'd like to remove
+        chosen_item = choose_item('light_red', prompt, search_results, results_printable_array)
 
         # Check if user wants to save changes
-        remove = prompt.yes?("Are you sure you want to remove '#{item_to_remove['name'].colorize(:light_red)} from your inventory'?")
+        remove = prompt.yes?("Are you sure you want to remove '#{chosen_item['name'].colorize(:light_red)} from your inventory'?")
         case remove
         when true
-            inventory.delete(item_to_remove)
-            puts "You have removed #{item_to_remove['name']}.".colorize(:light_red)
+            inventory.delete(chosen_item)
+            puts "You have removed #{chosen_item['name']}.".colorize(:light_red)
         when false
-            puts "You have not removed #{item_to_remove['name']}.".colorize(:light_green)
+            puts "You have not removed #{chosen_item['name']}.".colorize(:light_green)
         end
 
     end
 
+    def choose_item(text_colour, prompt, search_results, results_printable_array)
+
+        # Creating hash for tty-prompt to allow users to choose results
+        choose_search_result = Hash[results_printable_array.zip(search_results)]
+
+        # User chooses search result to remove
+        chosen_item = prompt.select("", choose_search_result)
+
+        # Display all details of chosen item
+        system 'clear'
+        string_in_line("#{chosen_item['name'].colorize(text_colour.to_sym)}", 162)
+        chosen_item.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
+        chosen_item.each { |k, v| print v.to_s + ' '*8 } ; puts
+        line(150) ; puts
+        
+        return chosen_item
+    end
 end

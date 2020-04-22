@@ -23,7 +23,16 @@ module ViewMethods
 
     end
 
-    # Displays entire contents of inventory to user
+    #                               ! Feature - Search Inventory Item !
+    def search_inventory(search_results, results_printable_array)
+        
+        # Outputs results of search_function method
+        puts results_printable_array ; puts
+
+    end
+
+    #                               ! Feature - Inventory View !
+    #                                 Displays entire contents of inventory to user
     def display_inventory(inventory)
         
         system 'clear'
@@ -36,6 +45,8 @@ module ViewMethods
 
     end
 
+    #                               ! Feature - Category View !
+    #                                 Displays all items in chosen category
     def display_category(prompt, categories, inventory)
         
         system 'clear'
@@ -56,6 +67,8 @@ module ViewMethods
 
     end
 
+    #                               ! Feature - Sub-Category View !
+    #                                 Displays all items in chosen sub-category
     def display_sub_category(prompt, categories, inventory)
         
         system 'clear'
@@ -72,7 +85,7 @@ module ViewMethods
 
     end
 
-    # Neatly displays whichever sub-category is passed to the method to user
+    # Neatly displays items in whichever sub-category is passed to the method
     def display_method(inventory, sub_category)
         inventory = inventory.sort_by { |a| [a['cat'], a['sub_cat'], a['sku'] ] }
         string_in_line(" #{sub_category.colorize(:light_green)} ", 114)
