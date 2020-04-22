@@ -1,0 +1,21 @@
+---
+- :category: hardware
+  :category_attributes:
+  - finish
+  :sub_categories:
+  - :tension_rods:
+    - length
+    - thread
+  - :strainers:
+    - brand
+    - type
+- :category: drum_heads
+  :category_attributes:
+  - coating
+  :sub_categories:
+  - :batter_heads:
+    - diameter
+    - brand
+  - :reso_heads:
+    - diameter
+    - brand

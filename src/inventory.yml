@@ -1,0 +1,28 @@
+---
+- name: standard snare strainer
+  sku: std-snr-cr
+  cat: hardware
+  sub_cat: strainers
+  qty: '5'
+  cost: '45'
+  finish: chrome
+  brand: inde drum labs
+  type: standard
+- name: tension rod chrome 100mm
+  sku: trod-cr-100
+  cat: hardware
+  sub_cat: tension_rods
+  qty: 100
+  cost: 1.2
+  finish: chrome
+  length: 100mm
+  thread: m5
+- name: tension rod chrome 80mm
+  sku: trod-cr-80
+  cat: hardware
+  sub_cat: tension_rods
+  qty: 150
+  cost: 1
+  finish: chrome
+  length: 80mm
+  thread: m5
