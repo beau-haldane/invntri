@@ -18,9 +18,14 @@ include SearchMethods
 prompt = TTY::Prompt.new(symbols: {marker: '-'})
 
 #               ! variables !
-inventory   = YAML.load(File.open(File.join(File.dirname(__FILE__), 'inventory.yml')))
+inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), 'inventory.yml')))
 
-categories  = YAML.load(File.open(File.join(File.dirname(__FILE__), 'categories.yml')))
+categories    = [   
+                    { category: 'hardware',     category_attributes: [ 'finish' ],  sub_categories:     [   {tension_rods:  ['length', 'thread'] },
+                                                                                                            {strainers:     ['brand', 'type'] }     ] },
+                    { category: 'drum_heads',   category_attributes: [ 'coating' ], sub_categories:     [   {batter_heads:  ['diameter', 'brand'] },
+                                                                                                            {reso_heads:    ['diameter', 'brand'] }     ] }
+                ]
 
 main_nav      = [   'Add Item',
                     'Edit Item',
