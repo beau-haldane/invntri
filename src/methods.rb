@@ -12,6 +12,4 @@ module Methods
         puts '-'*((length/2)-(string.length/2))+" #{string} "+'-'*((length/2)-(string.length/2))
     end
 
-    
-    
 end

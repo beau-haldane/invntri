@@ -4,11 +4,13 @@ require 'tty-prompt'
 require_relative 'methods.rb'
 require_relative 'item_methods.rb'
 require_relative 'view_methods.rb'
+require_relative 'display_methods.rb'
 require_relative 'search_methods.rb'
 
 include Methods
 include ItemMethods
 include ViewMethods
+include DisplayMethods
 include SearchMethods
 
 # initialize new instance of prompt

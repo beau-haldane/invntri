@@ -52,7 +52,13 @@ module ItemMethods
         end
 
         # Merge key_array and value_array and return item hash
-        return Hash[key_array.zip(value_array)]
+        new_item = Hash[key_array.zip(value_array)]
+
+        # Display new item to user
+        display_single_item(new_item, 'light_green') ; puts
+        puts "#{new_item['name'].colorize(:light_green)} added to inventory"
+
+        return new_item
 
     end
 
@@ -118,11 +124,7 @@ module ItemMethods
         chosen_item = prompt.select("", choose_search_result)
 
         # Display all details of chosen item
-        system 'clear'
-        string_in_line("#{chosen_item['name'].colorize(text_colour.to_sym)}", 162)
-        chosen_item.each { |k, v| print k.upcase + ' '*((v.to_s.length+8)-k.length) } ; puts
-        chosen_item.each { |k, v| print v.to_s + ' '*8 } ; puts
-        line(150) ; puts
+        display_single_item(chosen_item, text_colour)
         
         return chosen_item
     end

@@ -12,28 +12,31 @@ module ViewMethods
         
         case navigation
         when view_nav[0]                                # Item Search
-            search_inventory(*search_function(inventory, prompt, "Search Item by Name or SKU"))
+            search_inventory(prompt, *search_function(inventory, prompt, "Search Item by Name or SKU"))
         when view_nav[1]                                # Inventory View
-            display_inventory(inventory)
+            inventory_view(inventory)
         when view_nav[2]                                # Category View
-            display_category(prompt, categories, inventory)
+            category_view(prompt, categories, inventory)
         when view_nav[3]                                # Sub-Category View
-            display_sub_category(prompt, categories, inventory)
+            sub_category_view(prompt, categories, inventory)
         end
 
     end
 
     #                               ! Feature - Search Inventory Item !
-    def search_inventory(search_results, results_printable_array)
+    def search_inventory(prompt, search_results, results_printable_array)
         
+        # Asks user to choose which item they'd like to view
+        chosen_item = choose_item('light_green', prompt, search_results, results_printable_array)
+
         # Outputs results of search_function method
-        puts results_printable_array ; puts
+        # puts results_printable_array ; puts
 
     end
 
     #                               ! Feature - Inventory View !
     #                                 Displays entire contents of inventory to user
-    def display_inventory(inventory)
+    def inventory_view(inventory)
         
         system 'clear'
         
@@ -47,7 +50,7 @@ module ViewMethods
 
     #                               ! Feature - Category View !
     #                                 Displays all items in chosen category
-    def display_category(prompt, categories, inventory)
+    def category_view(prompt, categories, inventory)
         
         system 'clear'
             
@@ -69,7 +72,7 @@ module ViewMethods
 
     #                               ! Feature - Sub-Category View !
     #                                 Displays all items in chosen sub-category
-    def display_sub_category(prompt, categories, inventory)
+    def sub_category_view(prompt, categories, inventory)
         
         system 'clear'
             
@@ -83,19 +86,6 @@ module ViewMethods
 
         display_method(inventory, sub_category_to_view)
 
-    end
-
-    # Neatly displays items in whichever sub-category is passed to the method
-    def display_method(inventory, sub_category)
-        inventory = inventory.sort_by { |a| [a['cat'], a['sub_cat'], a['sku'] ] }
-        string_in_line(" #{sub_category.colorize(:light_green)} ", 114)
-        puts 'Item Name:' + ' '*(30 - 'Item Name:'.length) + 'SKU:' + ' '*(20 - 'SKU:'.length) + 'Category:' + ' '*(20 - 'Category:'.length) + 'Sub_Category:' + ' '*(20 - 'Sub-Category:'.length) + 'Qty:' ; puts
-        inventory.each do |hash|
-            if hash['sub_cat'] == sub_category.to_s
-                puts hash['name'] + ' '*(30 - hash['name'].length) + hash['sku'] + ' '*(20 - hash['sku'].length) + hash['cat'] + ' '*(20 - hash['cat'].length) + hash['sub_cat'] + ' '*(20 - hash['sub_cat'].length) + hash['qty'].to_s + ' '*(20 - hash['qty'].to_s.length)
-            end
-        end 
-        line(102) ; puts
     end
 
 end
