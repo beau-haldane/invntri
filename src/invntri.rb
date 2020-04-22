@@ -2,8 +2,12 @@ require 'colorize'
 require 'tty-prompt'
 
 require_relative 'methods.rb'
+require_relative 'item_methods.rb'
+require_relative 'view_methods.rb'
 
 include Methods
+include ItemMethods
+include ViewMethods
 
 # initialize new instance of prompt
 prompt = TTY::Prompt.new(symbols: {marker: '-'})
@@ -20,17 +24,19 @@ categories    = [
                                                                                                             {reso_heads:    ['diameter', 'brand'] }     ] }
                 ]
 
-main_nav      = [   'Add item',
-                    'Edit item',
-                    'Remove item',
-                    'Item Search',
-                    'View inventory',
+main_nav      = [   'Add Item',
+                    'Edit Item',
+                    'Remove Item',
+                    'View Inventory',
                     'Add/Edit Categories'   ]
 
 #               ! main program loop begin !
 exit = false
 until exit == true
     
+    # Keeps inventory sorted by cat, then sub_cat, then sku
+    inventory =  inventory.sort_by { |a| [a['cat'], a['sub_cat'], a['sku'] ] }
+
     # clear terminal
     system 'clear'
     
@@ -42,20 +48,17 @@ until exit == true
     
     # main navigation
     case navigation
-    when main_nav[0] # Add item
+    when main_nav[0]                                # Add item
         inventory << add_item(categories, prompt)
-    when main_nav[1] # Edit item
+    when main_nav[1]                                # Edit item
         edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
-    when main_nav[2] # Remove item
+    when main_nav[2]                                # Remove item
         remove_item(inventory, prompt, categories, *search_function(inventory, prompt, "Remove Item"))
-    when main_nav[3] # Item Search
-        search_inventory(*search_function(inventory, prompt, "Search Item by Name or SKU"))
-    when main_nav[4] # View Inventory
+    when main_nav[3]                                # View Inventory
+        view_inventory(prompt, inventory, categories)
+    when main_nav[4]                                # Add/Edit Categories
         system 'clear'
         puts "#{main_nav[4]} feature coming soon."
-    when main_nav[5] # Add/Edit Categories
-        system 'clear'
-        puts "#{main_nav[5]} feature coming soon."
     end
     
     # back to main menu?
