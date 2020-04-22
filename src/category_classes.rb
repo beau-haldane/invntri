@@ -3,19 +3,39 @@ module Categories
     class Category
         @@categories_hash = []
         
-        def initialize ( category, category_attributes)
+        def initialize (category, category_attributes)
+            @category = category
+            @category_attributes = category_attributes
+
+            create_hash(@category, @category_attributes)
+        end
+
+        def create_hash(category, category_attributes)
             @@categories_hash << {category: category, category_attributes: category_attributes, sub_categories: []}
         end
 
-        # def delete(category)
-        #     @@categories_hash.tap { |hash| hash.delete(category) }
-        # end
+        def delete(category)
+            @@categories_hash.delete_if { |hash| category.include?(hash[:category]) }
+        end
+
     end
 
     class SubCategory < Category
 
         def initialize (category, sub_cat_name, sub_cat_attributes)
+            @category = category
+            @sub_cat_name = sub_cat_name
+            @sub_cat_attributes = sub_cat_attributes
+            
+            create_hash(@category, @sub_cat_name, @sub_cat_attributes)
+        end
+
+        def create_hash(category, sub_cat_name, sub_cat_attributes)
             @@categories_hash.each { |hash| hash[:sub_categories] << Hash[sub_cat_name, sub_cat_attributes]  if hash[:category] == category  }
+        end
+
+        def delete(sub_category)
+            @@categories_hash.each { |hash| hash[:sub_categories].delete_if { |hash| hash.include?(sub_category) } }
         end
     end
 
@@ -27,12 +47,18 @@ until exit == true
 
     system 'clear'
 
-    Categories::Category.new( 'consumables', ['some attribute', 'another one'] )
-    Categories::SubCategory.new( 'consumables', 'glue', ['sub_cat_attr', 'sub_cat_attr2'] )
-    Categories::SubCategory.new( 'consumables', 'tape', ['colour', 'length'] )
+    consumables = Categories::Category.new( 'consumables', ['some attribute', 'another one'] )
+    glue = Categories::SubCategory.new( 'consumables', 'glue', ['sub_cat_attr', 'sub_cat_attr2'] )
+    tape = Categories::SubCategory.new( 'consumables', 'tape', ['colour', 'length'] )
 
-    Categories::Category.new( 'raw materials', [''] )
-    Categories::SubCategory.new( 'raw materials', 'timber', ['sub_cat_attr', 'sub_cat_attr2'] )
+    raw_materials = Categories::Category.new( 'raw materials', [''] )
+    timber = Categories::SubCategory.new( 'raw materials', 'timber', ['sub_cat_attr', 'sub_cat_attr2'] )
+
+    puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
+
+    # consumables.delete('consumables')
+
+    glue.delete('glue')
 
     puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
 
