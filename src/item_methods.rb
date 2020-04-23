@@ -1,5 +1,24 @@
 module ItemMethods
 
+    def add_edit_item(inventory, categories, prompt)
+        nav   = [   'Add Item',
+                    'Edit Item',
+                    'Remove Item',  ]
+        
+        system 'clear'
+        navigation = prompt.select("Add/Edit Item", nav)
+
+        # main navigation
+        case navigation
+        when nav[0]                                # Add item
+            inventory << add_item(categories, prompt)
+        when nav[1]                                # Edit item
+            edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
+        when nav[2]                                # Remove item
+            remove_item(inventory, prompt, categories, *search_function(inventory, prompt, "Remove Item"))
+        end
+    end
+    
     #                               ! Feature - Add Item !
     def add_item(categories, prompt)
 

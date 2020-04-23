@@ -1,18 +1,19 @@
 module Categories
     
     class Category
-        @@categories_hash = []
+        
+        attr_accessor :category_hash
+        # @@categories_hash = []
         
         def initialize (category, category_attributes)
             @category = category
             @category_attributes = category_attributes
-
-            create_hash(@category, @category_attributes)
+            @category_hash = {category: category, category_attributes: category_attributes, sub_categories: []}
         end
 
-        def create_hash(category, category_attributes)
-            @@categories_hash << {category: category, category_attributes: category_attributes, sub_categories: []}
-        end
+        # def return_hash
+        #     return 
+        # end
 
         def delete(category)
             @@categories_hash.delete_if { |hash| category.include?(hash[:category]) }
@@ -42,46 +43,46 @@ module Categories
 end
 
 
-exit = false
-until exit == true
+# exit = false
+# until exit == true
 
-    system 'clear'
+#     system 'clear'
 
-    consumables = Categories::Category.new( 'consumables', ['some attribute', 'another one'] )
-    glue = Categories::SubCategory.new( 'consumables', 'glue', ['sub_cat_attr', 'sub_cat_attr2'] )
-    tape = Categories::SubCategory.new( 'consumables', 'tape', ['colour', 'length'] )
+#     consumables = Categories::Category.new( 'consumables', ['some attribute', 'another one'] )
+#     glue = Categories::SubCategory.new( 'consumables', 'glue', ['sub_cat_attr', 'sub_cat_attr2'] )
+#     tape = Categories::SubCategory.new( 'consumables', 'tape', ['colour', 'length'] )
 
-    raw_materials = Categories::Category.new( 'raw materials', [''] )
-    timber = Categories::SubCategory.new( 'raw materials', 'timber', ['sub_cat_attr', 'sub_cat_attr2'] )
+#     raw_materials = Categories::Category.new( 'raw materials', [''] )
+#     timber = Categories::SubCategory.new( 'raw materials', 'timber', ['sub_cat_attr', 'sub_cat_attr2'] )
 
-    puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
+#     puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
 
-    # consumables.delete('consumables')
+#     # consumables.delete('consumables')
 
-    glue.delete('glue')
+#     glue.delete('glue')
 
-    puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
+#     puts Categories::Category.class_variable_get(:@@categories_hash) ; puts
 
-    # puts "New category name:"
-    # cat = gets.strip
-    # puts "Sub-category name:"
-    # sub_cat = gets.strip
+#     # puts "New category name:"
+#     # cat = gets.strip
+#     # puts "Sub-category name:"
+#     # sub_cat = gets.strip
 
-    # puts "Sub-category traits:"
-    # done = false
-    # until done == true
+#     # puts "Sub-category traits:"
+#     # done = false
+#     # until done == true
         
-    #     trait = gets.strip
-    #     done = true if trait == ''
-    #     traits << trait if trait != ''
+#     #     trait = gets.strip
+#     #     done = true if trait == ''
+#     #     traits << trait if trait != ''
 
-    # end
-    # cat = Categories::Category.new(cat, sub_cat, traits)
+#     # end
+#     # cat = Categories::Category.new(cat, sub_cat, traits)
 
   
 
-    puts "Would you like to enter another new category? [Y|N]"
-    input = gets.strip
-    exit = true if input == 'n'
+#     puts "Would you like to enter another new category? [Y|N]"
+#     input = gets.strip
+#     exit = true if input == 'n'
 
-end
+# end

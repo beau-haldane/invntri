@@ -19,3 +19,9 @@
   - :reso_heads:
     - diameter
     - brand
+- :category: asd
+  :category_attributes:
+  - asd
+  - asd
+  - asd
+  :sub_categories: []

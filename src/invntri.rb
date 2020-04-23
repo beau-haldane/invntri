@@ -1,37 +1,38 @@
-require 'yaml'
 require 'colorize'
+require 'tty-font'
 require 'tty-prompt'
+require 'yaml'
 
-require_relative 'methods.rb'
-require_relative 'item_methods.rb'
-require_relative 'view_methods.rb'
+require_relative 'category_classes.rb'
+require_relative 'category_methods.rb'
 require_relative 'display_methods.rb'
+require_relative 'item_methods.rb'
+require_relative 'methods.rb'
 require_relative 'search_methods.rb'
+require_relative 'view_methods.rb'
 
-include Methods
-include ItemMethods
-include ViewMethods
+include Categories
+include CategoryMethods
 include DisplayMethods
+include ItemMethods
+include Methods
 include SearchMethods
+include ViewMethods
 
 # initialize new instance of prompt
 prompt = TTY::Prompt.new(symbols: {marker: '-'})
+# initialize title font
+font = TTY::Font.new(:straight)
 
 #               ! variables !
 inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), 'inventory.yml')))
 
-categories    = [   
-                    { category: 'hardware',     category_attributes: [ 'finish' ],  sub_categories:     [   {tension_rods:  ['length', 'thread'] },
-                                                                                                            {strainers:     ['brand', 'type'] }     ] },
-                    { category: 'drum_heads',   category_attributes: [ 'coating' ], sub_categories:     [   {batter_heads:  ['diameter', 'brand'] },
-                                                                                                            {reso_heads:    ['diameter', 'brand'] }     ] }
-                ]
+categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), 'categories.yml')))
 
-main_nav      = [   'Add Item',
-                    'Edit Item',
-                    'Remove Item',
-                    'View Inventory',
-                    'Add/Edit Categories'   ]
+main_nav      = [   'View Inventory',
+                    'Add/Edit Item',
+                    'Add/Remove Categories',
+                    'Exit'   ]
 
 #               ! main program loop begin !
 exit = false
@@ -44,25 +45,21 @@ until exit == true
     system 'clear'
     
     # prints app name
-    puts 'INVNTRI' ; puts
+    puts font.write("INVNTRI")
     
     # present navigation prompt
     navigation = prompt.select("", main_nav)
     
     # main navigation
     case navigation
-    when main_nav[0]                                # Add item
-        inventory << add_item(categories, prompt)
-    when main_nav[1]                                # Edit item
-        edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
-    when main_nav[2]                                # Remove item
-        remove_item(inventory, prompt, categories, *search_function(inventory, prompt, "Remove Item"))
-    when main_nav[3]                                # View Inventory
+    when main_nav[0]                                # View Inventory
         view_inventory(prompt, inventory, categories)
-    when main_nav[4]                                # Add/Edit Categories
-        system 'clear'
-        puts "#{main_nav[4]} feature coming soon."
-        File.open("categories.yml","w") { |file| file.write categories.to_yaml } 
+    when main_nav[1]                                # Add/Edit Item
+        add_edit_item(inventory, categories, prompt)
+    when main_nav[2]                                # Add/Edit Categories
+        add_remove_category(prompt, categories)
+    when main_nav[3]                                # Add/Edit Item
+        return exit = true
     end
 
     # Writes any changes to inventory.yaml
