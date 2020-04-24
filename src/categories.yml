@@ -19,9 +19,23 @@
   - :reso_heads:
     - diameter
     - brand
-- :category: asd
+- :category: test
   :category_attributes:
-  - asd
-  - asd
-  - asd
-  :sub_categories: []
+  - test
+  - test
+  :sub_categories:
+  - test:
+    - test
+    - test
+- :category: raw materials
+  :category_attributes: []
+  :sub_categories:
+  - timber:
+    - species
+    - length
+    - width
+    - thickness
+  - steel bar:
+    - length
+    - width
+    - thickness

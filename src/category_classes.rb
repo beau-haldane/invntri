@@ -5,38 +5,35 @@ module Categories
         attr_accessor :category_hash
         # @@categories_hash = []
         
-        def initialize (category, category_attributes)
+        def initialize ( categories, category, category_attributes )
             @category = category
             @category_attributes = category_attributes
             @category_hash = {category: category, category_attributes: category_attributes, sub_categories: []}
+
+            categories << @category_hash
+            File.open("categories.yml","w") { |file| file.write categories.to_yaml }
         end
 
-        # def return_hash
-        #     return 
-        # end
-
         def delete(category)
-            @@categories_hash.delete_if { |hash| category.include?(hash[:category]) }
+            categories.delete_if { |hash| category.include?(hash[:category]) }
         end
 
     end
 
     class SubCategory < Category
 
-        def initialize (category, sub_cat_name, sub_cat_attributes)
+        def initialize (categories, category, sub_cat_name, sub_cat_attributes)
             @category = category
             @sub_cat_name = sub_cat_name
             @sub_cat_attributes = sub_cat_attributes
+            @sub_category_hash = Hash[sub_cat_name, sub_cat_attributes]
             
-            create_hash(@category, @sub_cat_name, @sub_cat_attributes)
-        end
-
-        def create_hash(category, sub_cat_name, sub_cat_attributes)
-            @@categories_hash.each { |hash| hash[:sub_categories] << Hash[sub_cat_name, sub_cat_attributes]  if hash[:category] == category  }
+            categories.each { |hash| hash[:sub_categories] << @sub_category_hash if hash[:category] == @category }
+            File.open("categories.yml","w") { |file| file.write categories.to_yaml }
         end
 
         def delete(sub_category)
-            @@categories_hash.each { |hash| hash[:sub_categories].delete_if { |hash| hash.include?(sub_category) } }
+            categories.each { |hash| hash[:sub_categories].delete_if { |hash| hash.include?(sub_category) } }
         end
     end
 

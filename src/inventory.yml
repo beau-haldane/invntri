@@ -44,3 +44,32 @@
   finish: chrome
   length: 80mm
   thread: m5
+- name: steel bar
+  sku: steel-bar
+  cat: raw materials
+  sub_cat: steel bar
+  qty: '4'
+  cost: '16'
+  length: '600'
+  width: '20'
+  thickness: '10'
+- name: tasmanian blackwood
+  sku: blk-wood
+  cat: raw materials
+  sub_cat: timber
+  qty: '1'
+  cost: '40'
+  species: Tasmanian Blackwood
+  length: '2400'
+  width: '250'
+  thickness: '40'
+- name: Rose Sheoak
+  sku: rose-sheoak
+  cat: raw materials
+  sub_cat: timber
+  qty: '2'
+  cost: '60'
+  species: Rose Sheoak
+  length: '2500'
+  width: '300'
+  thickness: '38'
