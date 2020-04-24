@@ -11,12 +11,22 @@ module SearchMethods
 
         # Ask user to search a term and return all items with the search term in 'name' or 'SKU'
         puts message ; puts
-        puts "Search by name or SKU:".colorize(:light_green)
-        search = prompt.ask("Search:")
-        system 'clear'
+
+        search_exists = false
+        until search_exists == true
+            
+            puts "Search by name or SKU:".colorize(:light_green)
+            search = prompt.ask("Search:")
+            system 'clear'
+            # Cancels loop if search term is found in inventory
+            inventory.each{ |item| search_exists = true if item['sku'].downcase.include?(search) }
+            puts "Sorry, no results matching search term '#{search.colorize(:light_green)}', please search again" ; puts
+
+        end
         search_results = inventory.select{|item| item['sku'].downcase.include?(search) || item['name'].downcase.include?(search) }
 
         # Output results of user search
+        system 'clear'
         title = "Showing results for '#{search.colorize(:light_green)}'"
         counter = 1
         string_in_line(title, 130) ; puts
@@ -25,8 +35,7 @@ module SearchMethods
         search_results.each do |hash|
             results_printable_array << "[#{counter}]" + ' '*(10 - "[#{counter}]".length) + hash['name'] + ' '*(35 - hash['name'].length) + hash['sku'] + ' '*(20 - hash['sku'].length) + hash['cat'] + ' '*(20 - hash['cat'].length) + hash['sub_cat'] + ' '*(20 - hash['sub_cat'].length) + hash['qty'].to_s + ' '*(20 - hash['qty'].to_s.length)
             counter += 1
-        end 
-        
+        end
 
         # Return array of item hashes from search results, along with a printable array of search results
         return search_results, results_printable_array
