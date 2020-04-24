@@ -1,22 +1,4 @@
 ---
-- name: qwe
-  sku: qwe
-  cat: drum_heads
-  sub_cat: reso_heads
-  qty: qwe
-  cost: qwe
-  coating: qwe
-  diameter: qwe
-  brand: qwe
-- name: qqq
-  sku: qqq
-  cat: hardware
-  sub_cat: strainers
-  qty: qqq
-  cost: qq
-  finish: q
-  brand: q
-  type: q
 - name: standard snare strainer
   sku: std-snr-cr
   cat: hardware

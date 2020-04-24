@@ -11,7 +11,7 @@ module ItemMethods
         # main navigation
         case navigation
         when nav[0]                                # Add item
-            inventory << add_item(categories, prompt)
+            add_item(inventory, categories, prompt)
         when nav[1]                                # Edit item
             edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
         when nav[2]                                # Remove item
@@ -20,7 +20,7 @@ module ItemMethods
     end
     
     #                               ! Feature - Add Item !
-    def add_item(categories, prompt)
+    def add_item(inventory, categories, prompt)
 
         system 'clear'
 
@@ -46,6 +46,10 @@ module ItemMethods
         # Find hash whose category matches the user's chosen category
         category_hash = categories.find {|x| x[:category] == item_category}
 
+        # Check if category has at least 1 sub-category
+        if category_hash[:sub_categories].empty?
+            puts "Please add at least 1 sub-category to the #{category_hash[:category].colorize(:light_green)} category before adding an item." ; return nil
+        end 
         # Create list of sub-categories for the user to choose from
         sub_category_array  = []
         category_hash[:sub_categories].each{|hash| hash.each{ |k,v| sub_category_array << k } }
@@ -77,7 +81,7 @@ module ItemMethods
         display_single_item(new_item, 'light_green') ; puts
         puts "#{new_item['name'].colorize(:light_green)} added to inventory"
 
-        return new_item
+        inventory << new_item
 
     end
 
