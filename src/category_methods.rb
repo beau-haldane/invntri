@@ -17,7 +17,7 @@ module CategoryMethods
         when nav[0]                                # Add Category
             add_category_menu(prompt, categories)
         when nav[1]                                # Remove Category
-            remove_category(prompt, categories)
+            remove_category_menu(prompt, categories)
         end
 
     end
@@ -37,9 +37,27 @@ module CategoryMethods
         when nav[0]                                # Add Category
             add_category(prompt, categories)
         when nav[1]                                # Add Sub-Category
-            choose_category(prompt, categories)
+            choose_or_create_category(prompt, categories)
         end
 
+    end
+
+    def remove_category_menu(prompt, categories)
+        # Prompts user to choose what they'd like to do
+        system 'clear'
+        nav   = [   'Remove Category',
+                    'Remove Sub-Category'  ]
+        
+                    system 'clear'
+        navigation = prompt.select("What would you like to do?", nav)
+
+        # Navigation
+        case navigation
+        when nav[0]                                # Remove Category
+            remove_category(prompt, categories)
+        when nav[1]                                # Remove Sub-Category
+            remove_sub_category(prompt, categories)
+        end
     end
 
     def add_category(prompt, categories)
@@ -80,7 +98,7 @@ module CategoryMethods
         
     end
 
-    def choose_category(prompt, categories)
+    def choose_or_create_category(prompt, categories)
         
         # Asks user which category they'd like to add sub-category to
         # Or whether they'd like to create new sub-category
@@ -161,6 +179,36 @@ module CategoryMethods
         remove = prompt.yes?("Permantently remove #{category_name.colorize(:light_red)}?")
         # Removes chosen category
         Categories::Category.delete(categories, category_name) if remove == true
+
+    end
+
+    def remove_sub_category(prompt, categories)
+
+        # User chooses category containing sub-category to remove
+        system 'clear'
+        category_array = []
+        categories.each { |hash| category_array << hash[:category] }
+        category_name = prompt.select("Choose category containing sub-category you'd like to remove:".colorize(:light_red), category_array)
+
+        # User chooses sub-category to remove
+        system 'clear'
+        sub_category_array = []
+        categories.each{|hash| hash[:sub_categories].each { |hash| hash.each { |k, v| sub_category_array << k.to_s  } } if hash[:category] == category_name }
+        sub_category_name = prompt.select("Choose sub-category you'd like to remove:".colorize(:light_red), sub_category_array )
+
+        # Are you sure?
+        system 'clear'
+        puts "Are you sure you want to delete the #{sub_category_name.colorize(:light_red)} sub-category?"
+        puts "This will permanently delete #{sub_category_name.colorize(:light_red)}" ; puts
+
+        # Shows category information of category to be removed
+        puts "#{sub_category_name.colorize(:light_red)}"
+        categories.each { |category| category[:sub_categories].each { |hash| hash.each { |k, v| v.each{ |attribute| puts "- #{attribute}" if k == sub_category_name.to_sym } } } } ; puts
+
+        # Asks user to confirm removal
+        remove = prompt.yes?("Permantently remove #{sub_category_name.colorize(:light_red)}?")
+        # Removes chosen sub-category
+        Categories::SubCategory.delete(categories, sub_category_name) if remove == true
 
     end
 
