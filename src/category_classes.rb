@@ -14,8 +14,9 @@ module Categories
             File.open("categories.yml","w") { |file| file.write categories.to_yaml }
         end
 
-        def delete(category)
+        def self.delete(categories, category)
             categories.delete_if { |hash| category.include?(hash[:category]) }
+            File.open("categories.yml","w") { |file| file.write categories.to_yaml }
         end
 
     end

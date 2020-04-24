@@ -19,14 +19,6 @@
   - :reso_heads:
     - diameter
     - brand
-- :category: test
-  :category_attributes:
-  - test
-  - test
-  :sub_categories:
-  - test:
-    - test
-    - test
 - :category: raw materials
   :category_attributes: []
   :sub_categories:
