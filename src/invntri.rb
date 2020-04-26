@@ -3,31 +3,27 @@ require 'tty-font'
 require 'tty-prompt'
 require 'yaml'
 
-require_relative 'category_classes.rb'
-require_relative 'category_methods.rb'
-require_relative 'display_methods.rb'
-require_relative 'item_methods.rb'
-require_relative 'methods.rb'
-require_relative 'search_methods.rb'
-require_relative 'view_methods.rb'
+require_relative './classes/category_classes.rb'
+require_relative './methods/category_methods.rb'
+require_relative './methods/display_methods.rb'
+require_relative './methods/item_methods.rb'
+require_relative './methods/search_methods.rb'
+require_relative './methods/view_methods.rb'
 
 include Categories
 include CategoryMethods
 include DisplayMethods
 include ItemMethods
-include Methods
 include SearchMethods
 include ViewMethods
 
-# initialize new instance of prompt
-prompt = TTY::Prompt.new(symbols: {marker: '-'})
-# initialize title font
-font = TTY::Font.new(:straight)
+# initialize new instance of prompt and font
+prompt  = TTY::Prompt.new(symbols: {marker: '-'})
+font    = TTY::Font.new(:straight)
 
 #               ! variables !
-inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), 'inventory.yml')))
-
-categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), 'categories.yml')))
+inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/inventory.yml')))
+categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/categories.yml')))
 
 main_nav      = [   'View Inventory',
                     'Add/Edit Item',

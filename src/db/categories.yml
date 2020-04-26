@@ -22,21 +22,3 @@
 - :category: raw materials
   :category_attributes: []
   :sub_categories: []
-- :category: test
-  :category_attributes:
-  - test
-  - test
-  - test
-  :sub_categories:
-  - test:
-    - test
-    - test
-- :category: category
-  :category_attributes:
-  - category attribute
-  - category attribute
-  :sub_categories:
-  - sub-category:
-    - sub-category attribute
-    - sub-category attribute
-    - sub-category attribute

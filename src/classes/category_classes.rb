@@ -37,6 +37,7 @@ module Categories
             categories.each { |hash| hash[:sub_categories].delete_if { |hash| hash.include?(sub_category) } }
             File.open("categories.yml","w") { |file| file.write categories.to_yaml }
         end
+        
     end
 
 end

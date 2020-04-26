@@ -15,11 +15,16 @@ module SearchMethods
         search_exists = false
         until search_exists == true
             
-            puts "Search by name or SKU:".colorize(:light_green)
-            search = prompt.ask("Search:")
-            system 'clear'
-            # Cancels loop if search term is found in inventory
-            inventory.each{ |item| search_exists = true if item['sku'].downcase.include?(search) }
+            begin
+                puts "Search by name or SKU:".colorize(:light_green)
+                search = prompt.ask("Search:")
+                system 'clear'
+                # Cancels loop if search term is found in inventory
+                inventory.each{ |item| search_exists = true if item['sku'].downcase.include?(search) }
+            rescue TypeError
+                puts "Please enter a valid search term!" ; puts
+                retry
+            end
             puts "Sorry, no results matching search term '#{search.colorize(:light_green)}', please search again" ; puts
 
         end
