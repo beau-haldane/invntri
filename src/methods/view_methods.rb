@@ -45,7 +45,6 @@ module ViewMethods
         
         # Presents all inventory items to user using the display_method
         begin
-
             sub_categories = []
             inventory.each { |hash| sub_categories << hash['sub_cat'] }
             string_in_line(" Current Inventory ".colorize(:light_green), 114) ; puts
