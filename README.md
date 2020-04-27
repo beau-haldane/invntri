@@ -194,6 +194,10 @@ Trello end of 2nd day. More and more issues and ideas are coming to light as I c
 Trello beginning day 3
 ![Trello Day 03](./docs/trello-screenshots/trello_day4.PNG)
 
+Trello end of day 4 - still some untouched items in backlog that I didn't manage to get around to, and well as some user stories that I didn't complete features for
+![Trello Day 43](./docs/trello-screenshots/trello_day4_02.PNG)
+
+
 ## Testing
 
 I wrote three tests which each test 3 of the app's main functions
