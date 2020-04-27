@@ -93,17 +93,17 @@ INVNTRI makes use of conditional validation for user input to assist with error-
   * Create main_nav array
   * Create inventory array and populate it with 3 dummy item hashes
   * Create category array and populate with 2 category hashes, each with 2 sub-categories
-  * 15 min
+  * Estimated time for completion: 15 min
 * Main Program Loop
   * Create an 'until' loop that is broken if 'exit' = true
-  * 2 min
+  * Estimated time for completion: 2 min
 * Main Menu Navigation
   * Install and require tty-prompt
   * Create main_nav array containing all navigation option
   * Create a new prompt using tty-prompt and the main_nav array as input
   * Create a case/when statement containing outcomes for each option
   * Create placeholder messages for each feature saying 'This feature is coming soon!'
-  * 25 min
+  * Estimated time for completion: 25 min
 * Feature - Add Inventory Item
   * Create two arrays inside the method called 'key_array' and 'value_array'
   * It is assumed that every single item in the inventory will have the following 'item-level' attributes: 'name', 'sku', 'cat', 'sub_cat', 'qty', 'cost' - pre-populate key_array with the inventory-level attributes
@@ -113,20 +113,55 @@ INVNTRI makes use of conditional validation for user input to assist with error-
   * Take the user input for 'sub_cat', and return an array of sub-category-level attributes (found in the category hash)
   * Iterate over each element of said array, prompting user to input a value - push the sub-category-level-attribute to key_array, and the user inputs to value_array
   * Use the .zip method to merge both arrays into a hash, using key_array as keys, and value_array as values
-  * 1.5 hrs
+  * Estimated time for completion: 1.5 hrs
 
 * Feature - Edit Inventory Item
   * Use the search_inventory feature to return user's search results
-  * User selects correct item from the list
-  * Use .select method to
+  * User selects item to edit from search results
+  * User selects which attributes they'd like to edit
+  * User edits attributes
+  * Save updates after user confirmation
+  * Estimated time for completion: 1.5 hrs
 * Feature - Remove Inventory Item
-  * 
+  * Use the search_inventory feature to return user's search results
+  * User selects item to remove from search results
+  * Delete item after user confirmation
+  * Estimated time for completion: 1 hr
 * Feature - View Inventory
   * Entire Inventory
+    * Show user list of all items currently in inventory
+    * Estimated time for completion: 45 mins
   * By Category:
+    * User chooses category to view
+    * Display all items in chosen category to user
+    * Estimated time for completion: 1 hr
   * By Sub_Category
-  
+    * User chooses sub-category to view
+    * Display all items in chosen sub-category to user
+    * Estimated time for completion: 1.5 hrs
+
 * Feature - Add Category/Sub-Category
+    * Add Category
+        * User inputs category name
+        * User inputs category level attributes
+        * Creates category hash containing name and attributes
+        * Pushes hash to array of categories
+    * Add Sub-Category
+        * User chooses category to add sub-category to
+        * User inputs sub-category name
+        * User inputs sub-category level attributes
+        * Creates category hash containing name and attributes
+        * Pushes hash to array of sub-categories
+    * Remove Category
+        * User chooses category to remove from list
+        * User confirms removal
+        * Deletes category hash from categories array
+    * Remove Sub-Category
+        * User chooses category which contains sub-category
+        * User chooses sub-category from list
+        * User confirms removal
+        * Deletes sub-category hash from categories array
+    * Estimated time for completion: 3-5hrs
 
 ## Development Log
 
