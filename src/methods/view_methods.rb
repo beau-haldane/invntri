@@ -3,6 +3,8 @@ module ViewMethods
     #                               ! Feature - View Inventory !
     def view_inventory(prompt, inventory, categories)
         
+        puts "You need to #{"add at least one item".colorize(:light_green)} to your inventory before you can use the 'View Inventory' functions." ; return if inventory == []
+
         # View navigation
         view_nav = ['Item Search', 'Inventory View', 'Category View', 'Sub-Cagtegory View']
         
@@ -12,7 +14,8 @@ module ViewMethods
         
         case navigation
         when view_nav[0]                                # Item Search
-            search_inventory(prompt, *search_function(inventory, prompt, "Search Item by Name or SKU"))
+            search_results = search_function(inventory, prompt, "Search Item by Name or SKU")
+            search_inventory(prompt, *search_results) if search_results != nil
         when view_nav[1]                                # Inventory View
             inventory_view(inventory)
         when view_nav[2]                                # Category View

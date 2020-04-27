@@ -17,6 +17,7 @@ module CategoryMethods
         when nav[0]                                # Add Category
             add_category_menu(prompt, categories)
         when nav[1]                                # Remove Category
+
             remove_category_menu(prompt, categories)
         end
 
@@ -43,6 +44,8 @@ module CategoryMethods
     end
 
     def remove_category_menu(prompt, categories)
+        puts "You need to #{"add at least one category".colorize(:light_green)} to your inventory before you can use the 'Remove Category' functions." ; return if categories == []
+        
         # Prompts user to choose what they'd like to do
         system 'clear'
         nav   = [   'Remove Category',
@@ -63,7 +66,7 @@ module CategoryMethods
     def add_category(prompt, categories)
         
         # User inputs new category details
-        category_name = prompt.ask("New category name:") ; puts
+        category_name = prompt.ask("New category name:", required: true) ; puts
         puts "! Please enter all category-level attributes !"
         puts "! INVNTRI captures #{'name, sku, quantity'.colorize(:light_green)} and #{'cost'.colorize(:light_green)} by default on all items - you do not need to add those attributes here !"
         puts "! A category-level attribute is an attribute that all items in this category have !"
@@ -123,7 +126,7 @@ module CategoryMethods
 
         # User inputs new sub-category details
         puts "Please add sub-category to #{category_name.colorize(:light_green)}" ; puts
-        sub_category_name = prompt.ask("New sub-category name:")
+        sub_category_name = prompt.ask("New sub-category name:", required: true)
         system 'clear'
         puts "Adding new sub-category: #{sub_category_name.colorize(:light_green)}" ; puts
         puts "! Please enter all sub-category-level attributes !"

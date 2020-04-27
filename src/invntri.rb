@@ -9,7 +9,6 @@ require_relative './methods/display_methods.rb'
 require_relative './methods/item_methods.rb'
 require_relative './methods/search_methods.rb'
 require_relative './methods/view_methods.rb'
-require_relative './tests/tests.rb'
 
 include Categories
 include CategoryMethods
@@ -25,6 +24,7 @@ font    = TTY::Font.new(:straight)
 #               ! variables !
 inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/test_inventory.yml')))
 categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/test_categories.yml')))
+
 inventory = [] if inventory == [nil] || inventory == false
 categories = [] if categories == [nil] || categories == false
 
@@ -61,7 +61,7 @@ until exit == true
         add_edit_item(inventory, categories, prompt)
     when main_nav[2]                                # Add/Edit Categories
         add_remove_category(prompt, categories)
-    when main_nav[3]                                # Add/Edit Item
+    when main_nav[3]                                # Exit
         return exit = true
     end
 

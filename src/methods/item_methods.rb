@@ -13,9 +13,11 @@ module ItemMethods
         when nav[0]                                # Add item
             add_item(inventory, categories, prompt)
         when nav[1]                                # Edit item
-            edit_item(prompt, categories, *search_function(inventory, prompt, "Edit Item"))
+            search_results = search_function(inventory, prompt, "Edit Item")
+            edit_item(prompt, categories, *search_results) if search_results != nil
         when nav[2]                                # Remove item
-            remove_item(inventory, prompt, categories, *search_function(inventory, prompt, "Remove Item"))
+            search_results = search_function(inventory, prompt, "Remove Item")
+            remove_item(inventory, prompt, categories, *search_results) if search_results != nil
         end
     end
     
@@ -25,18 +27,14 @@ module ItemMethods
         system 'clear'
 
         # Declaring arrays
-        key_array   = ['name', 'sku', 'cat', 'sub_cat', 'qty', 'cost' ]
+        key_array   = ['cat', 'sub_cat', 'name', 'sku', 'qty', 'cost' ]
         value_array = [ ]
 
         # Tells the user what to do
         puts "Add Item to Inventory" ; puts
-        puts "Type your answer and press [Enter]".colorize(:light_green)
+        puts "Type or select your answer and press [Enter]".colorize(:light_green)
         puts "[If you don't know some item details, you can edit the item later]".colorize(:light_black)
 
-        # Taking user input
-        value_array << prompt.ask("Item name:")
-        value_array << prompt.ask("SKU:")
-    
         # Create list of categories for the user to choose from
         begin
             category_array = []
@@ -44,6 +42,7 @@ module ItemMethods
             item_category = prompt.select("Category:", category_array)
             value_array << item_category
         rescue NoMethodError
+            system 'clear'
             puts "#{'Category:'.colorize(:light_red)} It looks like you haven't created any categories yet. Please create at least one category before adding an item."
             return
         end
@@ -61,22 +60,30 @@ module ItemMethods
         item_sub_category = prompt.select("Sub-Category:", sub_category_array)
         value_array << item_sub_category.to_s
 
-        # Continue taking user input
-        value_array << prompt.ask("Quantity:")
-        value_array << prompt.ask("Cost per item ($):")
+        # Taking user input
+        value_array << prompt.ask("Item name:" , required: true)
+        value_array << prompt.ask("SKU:" , required: true)
+        value_array << prompt.ask("Quantity:") do |q| 
+            q.validate { |input| input.strip.to_i.to_s == input.strip || input.strip.to_f.to_s == input.strip }
+            q.messages[:valid?] = 'Please enter a number'
+        end
+        value_array << prompt.ask("Cost per item ($):") do |q|
+            q.validate { |input| input.strip.to_i.to_s == input.strip || input.strip.to_f.to_s == input.strip }
+            q.messages[:valid?] = 'Please enter a number'
+        end
 
         # Iterate over array of category level attributes & get user input
         category_attributes = category_hash[:category_attributes]
         category_attributes.each do |attribute|
             key_array << attribute
-            value_array <<  prompt.ask("#{attribute.capitalize}:")
+            value_array <<  prompt.ask("#{attribute.capitalize}:" , required: true)
         end
 
         # Iterate over array of sub-category level attributes & get user input
         sub_category_attributes = category_hash[:sub_categories].find {|x| x.key?(item_sub_category)}
         sub_category_attributes[item_sub_category].each do |attribute|
             key_array << attribute
-            value_array <<  prompt.ask("#{attribute.capitalize}:")
+            value_array <<  prompt.ask("#{attribute.capitalize}:" , required: true)
         end
 
         # Merge key_array and value_array and return item hash
@@ -103,7 +110,16 @@ module ItemMethods
         item_attr_edit = prompt.multi_select("Which attributes you like to edit? (Arrow down to see all options)", item_attr)
 
         # User gives new values for attributes & values are updated in item hash
-        item_attr_edit.each { |key| chosen_item_copy[key] = prompt.ask("#{key.capitalize}:") } ; puts
+        item_attr_edit.each do |key|
+            if key == 'qty' || key == 'cost'
+                chosen_item_copy[key] = prompt.ask("#{key.capitalize}:") do |q| 
+                    q.validate { |input| input.strip.to_i.to_s == input.strip || input.strip.to_f.to_s == input.strip }
+                    q.messages[:valid?] = 'Please enter a number'
+                end
+            else
+                chosen_item_copy[key] = prompt.ask("#{key.capitalize}:", required: true)
+            end
+        end ; puts
 
         # Present changes to user
         system 'clear'
