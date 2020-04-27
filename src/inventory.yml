@@ -1,9 +1,0 @@
----
-- name: a
-  sku: a
-  cat: test
-  sub_cat: test
-  qty: a
-  cost: a
-  attr1: a
-  attr2: a
