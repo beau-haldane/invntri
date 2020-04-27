@@ -7,18 +7,19 @@
 - [Implementation Plan](#implementation-plan)
 - [Development Log](#development-log)
 - [Testing](#Testing)
+- [Installation & Help](./docs/helpfile.md)
 
 ## Purpose
 
-![Main Menu](./docs/screenshots/main_menu.PNG)
+![Main Menu](./docs/app-screenshots/main_menu.PNG)
 
 INVNTRI is a command line application written in Ruby which allows users to record inventory items and store them in custom defined categories and sub-categories. Users can define their own item categories along with category-level attributes which they'd like to record. Users can also define item sub-categories and sub-category level attributes. This allows users to record inventory item data specific to the item's category and use.
 
-![Item Details](./docs/screenshots/item_details.PNG)
+![Item Details](./docs/app-screenshots/item_details.PNG)
 
 Maintaining an inventory of items can be a difficult task. Without a system to manage and visualise your inventory, time will often be wasted counting items, checking if items are in stock, and checking the cost of items. INVNTRI aims to alleviate some of the difficulties of inventory management, saving the user time and stress.
 
-![Category View](./docs/screenshots/category_view.PNG)
+![Category View](./docs/app-screenshots/category_view.PNG)
 
 INVNTRI was developed with small businesses in mind, but can be used by anyone who would like to maintain an inventory of items and record specific details about dissimilar items in a flexible, dynamic way.
 
@@ -84,7 +85,7 @@ INVNTRI makes use of conditional validation for user input to assist with error-
 
 ## Program Flow
 
-![Program Flow](./docs/program_flow.jpg)
+![Program Flow](./docs/program-flow/program_flow.jpg)
 
 ## Implementation Plan
 
@@ -122,11 +123,9 @@ INVNTRI makes use of conditional validation for user input to assist with error-
   * 
 * Feature - View Inventory
   * Entire Inventory
-    * 
   * By Category:
-    * 
   * By Sub_Category
-    * 
+  
 * Feature - Add Category/Sub-Category
 
 ## Development Log
@@ -136,7 +135,7 @@ While coding the add_item feature, I came up with an addition/change to the feat
 
 Trello at end of day 1
 
-![Trello Day 01](./docs/trello_day1.PNG)
+![Trello Day 01](./docs/trello-screenshots/trello_day1.PNG)
 
 ### 22-04-2020 11:15am - day 2 - missing user stories
 
@@ -144,7 +143,7 @@ While coding the edit_item feature this morning I realised I'd missed a few user
 
 Trello board showing 2nd morning progress, new user stories, and new issues/suggestions
 
-![Trello Day 02](./docs/trello_day2.PNG)
+![Trello Day 02](./docs/trello-screenshots/trello_day2.PNG)
 
 ### 22-04-2020 3:30pm - day 2 - view inventory functions & yaml
 While coding the functions according to my implementation plan, I decided that it would be nice to have an option to view the entire inventory as well as viewing it by category and by sub-category. I think that if I create a method to display sub-categories in a neat manner, I should be able to reuse it in the display_category and display_inventory methods.
@@ -152,13 +151,28 @@ While coding the functions according to my implementation plan, I decided that i
 I also felt that it would be necessary for the app to store the inventory and category hashes in an external database. After a little bit of research, I've decided to implement this using YAML as it works nicely with Ruby and is easy to read and interpret
 
 Trello 2nd day, afternoon. Nearly completed all MVP features. Taking care of some minor improvements before moving on to more main features.
-![Trello Day 02-02](./docs/trello_day2_02.PNG)
+![Trello Day 02-02](./docs/trello-screenshots/trello_day2_02.PNG)
 
 Trello end of 2nd day. More and more issues and ideas are coming to light as I code
-![Trello Day 02-03](./docs/trello_day2_03.PNG)
+![Trello Day 02-03](./docs/trello-screenshots/trello_day2_03.PNG)
 
 Trello beginning day 3
-![Tresslo Day 03](./docs/trello_day4.PNG)
+![Trello Day 03](./docs/trello-screenshots/trello_day4.PNG)
 
 ## Testing
+
+I wrote three tests which each test 3 of the app's main functions
+
+### Add Category
+![Add Category Test](./docs/code-screenshots/add-category-test.PNG)
+
+### Add Sub-Category
+![Add Sub-Category Test](./docs/code-screenshots/add-sub-category-test.PNG)
+
+### Inventory View
+![Inventory View Test](./docs/code-screenshots/inventory-view-test.PNG)
+
+### Test Results
+![Test Results](./docs/code-screenshots/test-results.PNG)
+
 

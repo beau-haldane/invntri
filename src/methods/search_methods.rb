@@ -20,7 +20,7 @@ module SearchMethods
                 search = prompt.ask("Search:")
                 system 'clear'
                 # Cancels loop if search term is found in inventory
-                inventory.each{ |item| search_exists = true if item['sku'].downcase.include?(search) }
+                inventory.each{ |item| search_exists = true if item['name'].downcase.include?(search) || item['sku'].downcase.include?(search) }
             rescue TypeError
                 puts "Please enter a valid search term!" ; puts
                 retry
@@ -28,7 +28,7 @@ module SearchMethods
             puts "Sorry, no results matching search term '#{search.colorize(:light_green)}', please search again" ; puts
 
         end
-        search_results = inventory.select{|item| item['sku'].downcase.include?(search) || item['name'].downcase.include?(search) }
+        search_results = inventory.select{ |item| item['name'].downcase.include?(search) || item['sku'].downcase.include?(search) }
 
         # Output results of user search
         system 'clear'

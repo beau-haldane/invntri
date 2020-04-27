@@ -1,42 +1,7 @@
 ---
-- :category: hardware
+- 
+- :category: asd
   :category_attributes:
-  - finish
-  :sub_categories:
-  - :tension_rods:
-    - length
-    - thread
-  - :strainers:
-    - brand
-    - type
-- :category: drum_heads
-  :category_attributes:
-  - coating
-  :sub_categories:
-  - :batter_heads:
-    - diameter
-    - brand
-  - :reso_heads:
-    - diameter
-    - brand
-- :category: raw materials
-  :category_attributes: []
+  - asd
+  - asd
   :sub_categories: []
-- :category: test
-  :category_attributes:
-  - test
-  - test
-  - test
-  :sub_categories:
-  - test:
-    - test
-    - test
-- :category: category
-  :category_attributes:
-  - category attribute
-  - category attribute
-  :sub_categories:
-  - sub-category:
-    - sub-category attribute
-    - sub-category attribute
-    - sub-category attribute

@@ -86,7 +86,8 @@ module CategoryMethods
 
         # Creates new category
         category = Categories::Category.new( categories, category_name, category_level_attributes )
-         
+        File.open("./db/test_categories.yml","w") { |file| file.write categories.to_yaml }
+
         # Displays new category information to user
         system 'clear'
         puts "Added new category:" ; puts
@@ -146,6 +147,7 @@ module CategoryMethods
 
         # creates new sub-category hash and adds it to category hash
         Categories::SubCategory.new( categories, category_name, sub_category_name, sub_category_level_attributes )
+        File.open("./db/test_categories.yml","w") { |file| file.write categories.to_yaml }
 
         # Displays newly created sub-category to user
         system 'clear'

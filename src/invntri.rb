@@ -9,6 +9,7 @@ require_relative './methods/display_methods.rb'
 require_relative './methods/item_methods.rb'
 require_relative './methods/search_methods.rb'
 require_relative './methods/view_methods.rb'
+require_relative './tests/tests.rb'
 
 include Categories
 include CategoryMethods
@@ -22,8 +23,12 @@ prompt  = TTY::Prompt.new(symbols: {marker: '-'})
 font    = TTY::Font.new(:straight)
 
 #               ! variables !
-inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/inventory.yml')))
-categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/categories.yml')))
+inventory     = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/test_inventory.yml')))
+categories    = YAML.load(File.open(File.join(File.dirname(__FILE__), './db/test_categories.yml')))
+inventory = [] if inventory == [nil] || inventory == false
+categories = [] if categories == [nil] || categories == false
+
+name = (ARGV.length > 0) && ARGV
 
 main_nav      = [   'View Inventory',
                     'Add/Edit Item',
@@ -42,6 +47,8 @@ until exit == true
     
     # prints app name
     puts font.write("INVNTRI")
+
+    puts "Welcome, #{name[0]}" if ARGV.length > 0
     
     # present navigation prompt
     navigation = prompt.select("", main_nav)
@@ -59,7 +66,7 @@ until exit == true
     end
 
     # Writes any changes to inventory.yaml
-    File.open("inventory.yml","w") { |file| file.write inventory.to_yaml }
+    File.open("./db/test_inventory.yml","w") { |file| file.write inventory.to_yaml }
     
     # back to main menu?
     puts

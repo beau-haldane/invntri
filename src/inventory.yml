@@ -1,57 +1,9 @@
 ---
-- name: test
-  sku: test
-  cat: drum_heads
-  sub_cat: reso_heads
-  qty: '123'
-  cost: '1'
-  coating: qwe
-  diameter: qwe
-  brand: qwe
-- name: standard snare strainer
-  sku: std-snr-cr
-  cat: hardware
-  sub_cat: strainers
-  qty: '5'
-  cost: '45'
-  finish: chrome
-  brand: inde drum labs
-  type: standard
-- name: tension rod chrome 100mm
-  sku: trod-cr-100
-  cat: hardware
-  sub_cat: tension_rods
-  qty: 100
-  cost: 1.2
-  finish: chrome
-  length: 100mm
-  thread: m5
-- name: tension rod chrome 80mm
-  sku: trod-cr-80
-  cat: hardware
-  sub_cat: tension_rods
-  qty: 150
-  cost: 1
-  finish: chrome
-  length: 80mm
-  thread: m5
-- name: tasmanian blackwood
-  sku: blk-wood
-  cat: raw materials
-  sub_cat: timber
-  qty: '1'
-  cost: '40'
-  species: Tasmanian Blackwood
-  length: '2400'
-  width: '250'
-  thickness: '40'
-- name: Rose Sheoak
-  sku: rose-sheoak
-  cat: raw materials
-  sub_cat: timber
-  qty: '2'
-  cost: '60'
-  species: Rose Sheoak
-  length: '2500'
-  width: '300'
-  thickness: '38'
+- name: a
+  sku: a
+  cat: test
+  sub_cat: test
+  qty: a
+  cost: a
+  attr1: a
+  attr2: a

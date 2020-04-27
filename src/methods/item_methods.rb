@@ -38,10 +38,15 @@ module ItemMethods
         value_array << prompt.ask("SKU:")
     
         # Create list of categories for the user to choose from
-        category_array = []
-        categories.each { |hash| category_array << hash[:category] }
-        item_category = prompt.select("Category:", category_array)
-        value_array << item_category
+        begin
+            category_array = []
+            categories.each { |hash| category_array << hash[:category] }
+            item_category = prompt.select("Category:", category_array)
+            value_array << item_category
+        rescue NoMethodError
+            puts "#{'Category:'.colorize(:light_red)} It looks like you haven't created any categories yet. Please create at least one category before adding an item."
+            return
+        end
 
         # Find hash whose category matches the user's chosen category
         category_hash = categories.find {|x| x[:category] == item_category}

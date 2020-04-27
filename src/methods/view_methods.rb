@@ -41,10 +41,15 @@ module ViewMethods
         system 'clear'
         
         # Presents all inventory items to user using the display_method
-        sub_categories = []
-        inventory.each { |hash| sub_categories << hash['sub_cat'] }
-        string_in_line(" Current Inventory ".colorize(:light_green), 114) ; puts
-        sub_categories.uniq.each{ |i| display_method(inventory, i) }
+        begin
+            sub_categories = []
+            inventory.each { |hash| sub_categories << hash['sub_cat'] }
+            string_in_line(" Current Inventory ".colorize(:light_green), 114) ; puts
+            sub_categories.uniq.each{ |i| display_method(inventory, i) }
+        rescue NoMethodError
+            puts "You don't have any inventory items to view. Add some before using this function."
+            return "No items in inventory"
+        end
 
     end
 
